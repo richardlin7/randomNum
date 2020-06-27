@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 const rand = require("./random");
+var cors = require("cors");
+
+app.use(cors({ origin: "http://localhost:8080" }));
 
 app.get("/", (req, res) => {
   res.send(rand.random().toString());
