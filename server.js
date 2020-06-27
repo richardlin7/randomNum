@@ -3,7 +3,10 @@ const app = express();
 const rand = require("./random");
 
 app.get("/", (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:8080");
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "http://richard.cheung.nyc:8080/"
+  );
   res.send(rand.random().toString());
 });
 
