@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const rand = require("./random");
+const cors = require("cors");
 
 app.get("/with-cors", cors(), (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:8080");
