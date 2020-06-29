@@ -12,8 +12,8 @@ const rand = require("./random.js");
 app.get("/", function (req, res) {
   res.header(
     "Access-Control-Allow-Origin",
-    "http://localhost:8080/"
-    // "http://richard.cheung.nyc:8080/"
+    //"http://localhost:8080/"
+    "http://richard.cheung.nyc:8080/"
   );
   // res.setHeader(
   //   "Access-Control-Allow-Methods",
