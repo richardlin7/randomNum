@@ -21,54 +21,68 @@ const url =
 //   useUnifiedTopology: true,
 // });
 
-MongoClient.connect(url, function (err, db) {
-  if (err) throw err; // if error occurs
-  var dbo = db.db("invalid-input");
-  var d = new Date();
-  var myobj = { high: "10", low: "5", date: d };
-
-  dbo.collection("invalid-input1").insertOne(myobj, function (err, res) {
-    if (err) throw err;
-    console.log("Invalid Input: logged for inspection");
-    db.close();
-  });
-});
-
-// Mongoose code
-// mongoose.Promise = global.Promise;
-// mongoose.connect(url, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
-
-// const Schema = new mongoose.Schema();
-// const invalid = new Schema({ high: 10, low: 5 });
-
 // BodyParser code
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Requests code
-app.post("/", function (req, res) {
+app.post("/", function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  var id = req.connection.remoteAddress; // get ip address
   var high = req.body.high;
   var low = req.body.low;
+  var id = req.connection.remoteAddress; // gets ip
 
-  if (high === parseInt(high, 10) || low === parseInt(low, 10)) {
+  if (high != parseInt(high, 10) || low != parseInt(low, 10)) {
     // check if it is an int
-    //send error here
+    MongoClient.connect(url, function (err, db) {
+      if (err) throw err; // if error occurs
+      var dbo = db.db("invalid-input"); // connects to database 'invalid-input'
+
+      var d = new Date(); // gets current date
+      var myobj = { high: high, low: low, ip: id, date: d };
+
+      dbo.collection("invalid-input1").insertOne(myobj, function (err, res) {
+        if (err) throw err;
+        console.log("Invalid Input: logged for inspection");
+        db.close();
+      });
+    });
+    res.end();
   }
   if (isNaN(high) || isNaN(low)) {
     // check if its a number
-    //send error here
+    MongoClient.connect(url, function (err, db) {
+      if (err) throw err; // if error occurs
+      var dbo = db.db("invalid-input"); // connects to database 'invalid-input'
+
+      var d = new Date(); // gets current date
+      var myobj = { high: high, low: low, ip: id, date: d };
+
+      dbo.collection("invalid-input1").insertOne(myobj, function (err, res) {
+        if (err) throw err;
+        console.log("Invalid Input: logged for inspection");
+        db.close();
+      });
+    });
+    res.end();
   }
   if (high <= 0 || low <= 0 || low >= high) {
     // check if low is greater than high, make sure they are not negative
-    //send error here
-  }
+    MongoClient.connect(url, function (err, db) {
+      if (err) throw err; // if error occurs
+      var dbo = db.db("invalid-input"); // connects to database 'invalid-input'
 
-  console.log(id);
+      var d = new Date(); // gets current date
+      var myobj = { high: high, low: low, ip: id, date: d };
+
+      dbo.collection("invalid-input1").insertOne(myobj, function (err, res) {
+        if (err) throw err;
+        console.log("Invalid Input: Logged for Inspection");
+        db.close();
+      });
+    });
+    res.end();
+  }
   console.log("Got body.max:", high);
   console.log("Got body.min:", low);
   res.send(rand.random(high, low).toString());
