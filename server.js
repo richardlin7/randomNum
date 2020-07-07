@@ -5,9 +5,9 @@ const rand = require("./random.js");
 // const mongoose = require("mongoose");
 
 // MongoDB code
-// const MongoClient = require("mongodb").MongoClient;
-// const url =
-//   "mongodb+srv://richard:rlin9774@cluster0.vzfde.gcp.mongodb.net/random?retryWrites=true&w=majority";
+const MongoClient = require("mongodb").MongoClient;
+const url =
+  "mongodb+srv://richard:rlin9774@cluster0.vzfde.gcp.mongodb.net/random?retryWrites=true&w=majority";
 
 // const client = new MongoClient(url, { for mongoose
 //   useUnifiedTopology: true,
@@ -21,18 +21,18 @@ const rand = require("./random.js");
 //   useUnifiedTopology: true,
 // });
 
-// MongoClient.connect(url, function (err, db) {
-//   if (err) throw err; // if error occurs
-//   var dbo = db.db("invalid-input");
-//   var d = new Date();
-//   var myobj = { high: "10", low: "5", date: d };
+MongoClient.connect(url, function (err, db) {
+  if (err) throw err; // if error occurs
+  var dbo = db.db("invalid-input");
+  var d = new Date();
+  var myobj = { high: "10", low: "5", date: d };
 
-//   dbo.collection("invalid-input1").insertOne(myobj, function (err, res) {
-//     if (err) throw err;
-//     console.log("Invalid Input: logged for inspection");
-//     db.close();
-//   });
-// });
+  dbo.collection("invalid-input1").insertOne(myobj, function (err, res) {
+    if (err) throw err;
+    console.log("Invalid Input: logged for inspection");
+    db.close();
+  });
+});
 
 // Mongoose code
 // mongoose.Promise = global.Promise;
@@ -51,7 +51,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Requests code
 app.post("/", function (req, res) {
   res.header("Access-Control-Allow-Origin", "*");
-  var id = req.connection.remoteAddress;
+  var id = req.connection.remoteAddress; // get ip address
   var high = req.body.high;
   var low = req.body.low;
 
