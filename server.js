@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Requests code
-app.post("/", function (req, res, next) {
+app.post("/", function (req, res) {
   res.header("Access-Control-Allow-Origin", "*");
   var high = req.body.high;
   var low = req.body.low;
@@ -47,7 +47,7 @@ app.post("/", function (req, res, next) {
         db.close();
       });
     });
-    res.end();
+    return res.end();
   }
   if (isNaN(high) || isNaN(low)) {
     // check if its a number
@@ -64,7 +64,7 @@ app.post("/", function (req, res, next) {
         db.close();
       });
     });
-    res.end();
+    return res.end();
   }
   if (high <= 0 || low <= 0 || low >= high) {
     // check if low is greater than high, make sure they are not negative
@@ -81,7 +81,7 @@ app.post("/", function (req, res, next) {
         db.close();
       });
     });
-    res.end();
+    return res.end();
   }
   console.log("Got body.max:", high);
   console.log("Got body.min:", low);
