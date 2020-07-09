@@ -28,8 +28,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Requests code
 app.post("/", function (req, res) {
   res.header("Access-Control-Allow-Origin", "*");
-  var high = req.body.high;
-  var low = req.body.low;
+  var high = parseInt(req.body.high, 10);
+  var low = parseInt(req.body.low, 10);
   var id = req.connection.remoteAddress; // gets ip
 
   if (high != parseInt(high, 10) || low != parseInt(low, 10)) {
