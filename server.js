@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -7,8 +10,7 @@ const rand = require("./random.js");
 
 // MongoDB code
 const MongoClient = require("mongodb").MongoClient;
-// const url =
-//   "mongodb+srv://richard:rlin9774@cluster0.vzfde.gcp.mongodb.net/random?retryWrites=true&w=majority";
+// const url = process.env.url;
 const url = "mongodb://localhost:27017";
 
 // BodyParser code
